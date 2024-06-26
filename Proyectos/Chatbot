@@ -1,1 +1,19 @@
-
+!pip install gradio
+!pip install hugchat
+from hugchat import hugchat
+from hugchat.login import Login
+import getpass
+email = input("Introduce tu email de Hugging Face: ")
+passwd = getpass.getpass("Introduce tu contraseña de Hugging Face: ")
+cuenta = Login(email, passwd)
+cuenta_log = cuenta.login()
+chatbot = hugchat.ChatBot(cookies=cuenta_log.get_dict())
+mensajesDespedida = ['adios','hasta luego','hasta la vista']
+print('Bot: Hola, ¿Como puedo ayudarte hoy?')
+while True:
+    entrada_usuario = input("Usuario: ")
+    if entrada_usuario.lower() in mensajesDespedida:
+        print('Bot: Adios')
+        break
+    respuesta = chatbot.chat(entrada_usuario)
+    print(f"Bot: {respuesta}")
